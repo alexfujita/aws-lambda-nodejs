@@ -1,0 +1,67 @@
+service: lambda-kinesis
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: ${opt:stage, self:custom.defaultStage}
+  profile: default
+  region: ap-northeast-1
+  memorySize: 1024
+  timeout: 180
+  environment: ${file(config.${self:provider.stage}.yml)}
+  vpc: ${self:custom.vpc.${self:provider.stage}}
+  role: arn:aws:iam::***:role/***
+
+plugins:
+  - serverless-webpack
+  - serverless-prune-plugin
+
+custom:
+  defaultStage: dev
+  webpackIncludeModules:
+    forceInclude:
+      - mysql
+  prune:
+    automatic: true
+    number: 3
+  vpc:
+    dev:
+      securityGroupIds:
+        - sg-47b33b20
+      subnetIds:
+        - subnet-926904e4
+    prod:
+      securityGroupIds:
+        - sg-5379f134
+      subnetIds:
+        - subnet-30731e46
+  kinesisStream:
+    prod:
+      filter-tweets: arn:aws:kinesis:ap-northeast-1:***:stream/***
+    dev:
+      filter-tweets: arn:aws:kinesis:ap-northeast-1:***:stream/***
+functions:
+  filter-tweets:
+    handler: src/functions/tweets.handler
+    role: arn:aws:iam::***:role/***
+    timeout: 900
+    events:
+      - stream:
+          type: kinesis
+          arn: ${self:custom.kinesisStream.${self:provider.stage}.***}
+          batchSize: 5000
+          maximumRetryAttempts: 3
+          startingPosition: TRIM_HORIZON
+          enabled: true
+  filter-tweets-by-tweet-id:
+    handler: src/functions/tweets-by-id.handler
+    role: arn:aws:iam::***:role/***
+    timeout: 900
+    events:
+      - stream:
+          type: kinesis
+          arn: arn:aws:kinesis:ap-northeast-1:***:stream/***
+          batchSize: 5000
+          maximumRetryAttempts: 3
+          startingPosition: TRIM_HORIZON
+          enabled: true

@@ -1,0 +1,65 @@
+{
+  "name": "lambda-nodejs",
+  "version": "1.0.0",
+  "description": "scraper lambda",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint  --ignore-path .gitignore .",
+    "lint:updated": "pipe-git-updated --ext=js -- eslint --ignore-path .gitignore",
+    "prettier-check": "prettier -c --ignore-path .gitignore \"**/*.{css,html,js,json,md,yaml,yml}\"",
+    "prettier-check:updated": "pipe-git-updated --ext=css --ext=html --ext=js --ext=json --ext=md --ext=yaml --ext=yml -- prettier -c",
+    "prettify": "prettier --write --ignore-path .gitignore \"**/*.{css,html,js,json,md,yaml,yml}\"",
+    "prettify:updated": "pipe-git-updated --ext=css --ext=html --ext=js --ext=json --ext=md --ext=yaml --ext=yml -- prettier --write"
+  },
+  "repository": {
+    "type": "git",
+    "url": "xxx"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@serverless/eslint-config": "^2.1.1",
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-flowtype": "^2.46.3",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jest": "^21.15.1",
+    "eslint-plugin-prettier": "^2.6.0",
+    "git-list-updated": "^1.2.1",
+    "prettier": "^1.19.1",
+    "serverless": "^1.27.2",
+    "serverless-prune-plugin": "^1.3.1",
+    "serverless-webpack": "^5.1.5"
+  },
+  "dependencies": {
+    "@serverless-chrome/lambda": "1.0.0-38",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "batch-promises": "^0.0.3",
+    "crypto": "^1.0.1",
+    "lodash": "^4.17.11",
+    "moment": "^2.22.1",
+    "mysql": "^2.18.1",
+    "qs": "^6.5.2",
+    "rss-finder": "^2.0.6",
+    "rss-parser": "^3.4.3",
+    "sqlstring": "^2.3.1",
+    "webpack": "^4.8.1",
+    "webpack-cli": "^2.1.3",
+    "webpack-node-externals": "^1.7.2",
+    "xmldom": "^0.1.27",
+    "xpath": "^0.0.27"
+  },
+  "prettier": {
+    "singleQuote": true
+  },
+  "eslintConfig": {
+    "extends": "@serverless/eslint-config/node",
+    "root": true
+  }
+}
